@@ -19,3 +19,5 @@ Top 10 Things Apprentices Should Know
 9) Know the difference between unit testing and TDD and be able to practice TDD
 
 10)  Know whether lunch is billable or not
+
+git merge branches
