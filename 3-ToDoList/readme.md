@@ -5,3 +5,5 @@ Key Points
 3) Create JUnit4 tests using Robolectric
 4) Mock out the database
 
+Something like
+https://github.com/avjinder/Minimal-Todo
