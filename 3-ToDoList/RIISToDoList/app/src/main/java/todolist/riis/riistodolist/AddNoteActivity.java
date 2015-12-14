@@ -11,15 +11,14 @@ import android.widget.EditText;
 public class AddNoteActivity extends Activity {
     private EditText mTodoEditText;
     private Button mSaveButton;
-    private NoteOperations mNoteOperations;
-    private String mNoteText;
+    private AddNotePresenter mNotePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
 
-        mNoteOperations = new NoteOperations(this);
+        mNotePresenter = new AddNotePresenter(this);
 
         setUpViews();
         setUpListeners();
@@ -34,13 +33,8 @@ public class AddNoteActivity extends Activity {
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mNoteText.isEmpty()) {
-                    mNoteOperations.open();
-                    mNoteOperations.addNote(mNoteText);
-                    mNoteOperations.close();
-
-                    finish();
-                }
+                mNotePresenter.createDbNote();
+                finish();
             }
         });
 
@@ -52,7 +46,7 @@ public class AddNoteActivity extends Activity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mNoteText = s.toString();
+                mNotePresenter.storeNoteContent(s.toString());
             }
 
             @Override

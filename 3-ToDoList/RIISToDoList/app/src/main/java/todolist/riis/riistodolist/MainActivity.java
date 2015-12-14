@@ -1,25 +1,23 @@
 package todolist.riis.riistodolist;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import java.util.List;
-
 public class MainActivity extends Activity {
+    private MainPresenter mMainPresenter;
     private RecyclerView mNoteRecyclerView;
     private FrameLayout mCreateNoteButton;
-    private NoteRecyclerViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mMainPresenter = new MainPresenter(this);
 
         setUpViews();
         setUpListeners();
@@ -27,7 +25,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onResume() {
-        mAdapter = new NoteRecyclerViewAdapter(this);
+        NoteRecyclerViewAdapter mAdapter = new NoteRecyclerViewAdapter(this);
         mNoteRecyclerView.setAdapter(mAdapter);
         super.onResume();
     }
@@ -46,7 +44,7 @@ public class MainActivity extends Activity {
         mCreateNoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddNoteActivity.class));
+                mMainPresenter.startNextActivity();
             }
         });
     }
