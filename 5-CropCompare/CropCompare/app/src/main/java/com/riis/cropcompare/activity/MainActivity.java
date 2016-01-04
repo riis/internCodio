@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -27,25 +28,31 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button fabButton = (Button) findViewById(R.id.fab_button);
         mAcreage = (EditText) findViewById(R.id.acreage);
         addStatesToSpinner();
-    }
 
-    public void onFabPressed(View view)
-    {
-        if (!Objects.equals(String.valueOf(mStateSpinner.getSelectedItem()), "Select a state") &&
-                mAcreage.getText().length() != 0 && Integer.parseInt(String.valueOf(mAcreage.getText())) != 0)
+        fabButton.setOnClickListener(new View.OnClickListener()
         {
-            Intent intent = new Intent(MainActivity.this, CropSelectActivity.class);
-            intent.putExtra("state", String.valueOf(mStateSpinner.getSelectedItem()));
-            intent.putExtra("acreage", String.valueOf(mAcreage.getText()));
+            @Override
+            public void onClick(View v)
+            {
+                if (!Objects.equals(String.valueOf(mStateSpinner.getSelectedItem()), "Select a state")
+                        && mAcreage.getText().length() != 0
+                        && Integer.parseInt(String.valueOf(mAcreage.getText())) != 0)
+                {
+                    Intent intent = new Intent(MainActivity.this, CropSelectActivity.class);
+                    intent.putExtra("state", String.valueOf(mStateSpinner.getSelectedItem()));
+                    intent.putExtra("acreage", String.valueOf(mAcreage.getText()));
 
-            startActivity(intent);
-        }
-        else
-        {
-            makeToast();
-        }
+                    startActivity(intent);
+                }
+                else
+                {
+                    makeToast();
+                }
+            }
+        });
     }
 
     private void makeToast()
