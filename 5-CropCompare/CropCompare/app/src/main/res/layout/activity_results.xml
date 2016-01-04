@@ -32,6 +32,7 @@
         android:layout_centerHorizontal="true"
         android:background="@color/midoriAccent"
         android:orientation="vertical"
+        android:weightSum="1"
         android:padding="@dimen/activity_vertical_margin">
 
         <LinearLayout
