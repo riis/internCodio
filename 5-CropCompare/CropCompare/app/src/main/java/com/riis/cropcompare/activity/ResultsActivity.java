@@ -3,15 +3,13 @@ package com.riis.cropcompare.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.riis.cropcompare.R;
+import com.riis.cropcompare.model.AvailableCropResponse;
 import com.riis.cropcompare.model.HandleResponseInterface;
 import com.riis.cropcompare.model.Vault;
-import com.riis.cropcompare.util.GetResultsTask;
-import com.riis.cropcompare.util.Util;
+import com.riis.cropcompare.util.GetCropCostTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +24,6 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
     private float mYieldData;
     private int mAcreage;
     private String mCropSelected;
-    private ProgressBar mProgressBar;
     private TextView mCostTextView;
     private TextView mPriceTextView;
     private TextView mTotalTextView;
@@ -46,34 +43,32 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
         mYieldTextView = (TextView)findViewById(R.id.yieldResultTextView);
         mTotalTextView = (TextView)findViewById(R.id.totalResultTextView);
         mCostTextView = (TextView)findViewById(R.id.costResultTextView);
-        mProgressBar = (ProgressBar)findViewById(R.id.progressBar1);
 
         setUpCosts();
 
-        mProgressBar.setVisibility(View.VISIBLE);
+        //mProgressBar.setVisibility(View.VISIBLE);
 
-        new GetResultsTask(this, true).execute(Vault.getPriceReceivedURL(stateSelected));
-        new GetResultsTask(this, true).execute(Vault.getYieldURL(stateSelected));
+        new GetCropCostTask(this, true).execute(Vault.getCropYieldUrl(stateSelected, mCropSelected));
     }
 
     @Override
-    public void handleResponse(String response, boolean yieldRequest) {
-        if(yieldRequest)
-        {
-            mYieldData = new Util().parseDataResponse(response);
-            mYieldFound = true;
-        }
-        else
-        {
-            mPriceData = new Util().parseDataResponse(response);
-            mPriceFound = true;
-        }
-
-        if(mPriceFound && mYieldFound)
-        {
-            setResultText();
-            mProgressBar.setVisibility(View.GONE);
-        }
+    public void handleCropResponse(AvailableCropResponse response) {
+//        if(yieldRequest)
+//        {
+//            mYieldData = new Util().parseDataResponse(response);
+//            mYieldFound = true;
+//        }
+//        else
+//        {
+//            mPriceData = new Util().parseDataResponse(response);
+//            mPriceFound = true;
+//        }
+//
+//        if(mPriceFound && mYieldFound)
+//        {
+//            setResultText();
+//            //mProgressBar.setVisibility(View.GONE);
+//        }
     }
 
     private void setUpCosts() {

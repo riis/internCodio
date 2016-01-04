@@ -2,34 +2,35 @@ package com.riis.cropcompare.util;
 
 import android.os.AsyncTask;
 
+import com.riis.cropcompare.model.AvailableCropResponse;
 import com.riis.cropcompare.model.HandleResponseInterface;
 
-public class GetResultsTask extends AsyncTask<String, Void, String>
+public class GetCropCostTask extends AsyncTask<String, Void, AvailableCropResponse>
 {
     private boolean mYieldRequest;
     private HandleResponseInterface mHandleResponseInterface;
 
-    public GetResultsTask(HandleResponseInterface handleResponseInterface, boolean yieldRequest)
+    public GetCropCostTask(HandleResponseInterface handleResponseInterface, boolean yieldRequest)
     {
         mHandleResponseInterface = handleResponseInterface;
         mYieldRequest = yieldRequest;
     }
 
     @Override
-    protected String doInBackground(String... vars)
+    protected AvailableCropResponse doInBackground(String... vars)
     {
         if(vars.length != 1)
         {
             return null;
         }
 
-        return new MakeRequest().sendGet(vars[0]);
+        return new HttpHelper().getCropCost(vars[0]);
     }
 
     @Override
-    protected void onPostExecute(String result)
+    protected void onPostExecute(AvailableCropResponse result)
     {
         super.onPostExecute(result);
-        mHandleResponseInterface.handleResponse(result, mYieldRequest);
+        mHandleResponseInterface.handleCropResponse(result);
     }
 }

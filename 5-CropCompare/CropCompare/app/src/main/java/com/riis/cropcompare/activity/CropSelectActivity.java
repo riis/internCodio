@@ -9,11 +9,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.riis.cropcompare.R;
+import com.riis.cropcompare.model.AvailableCropResponse;
 import com.riis.cropcompare.model.HandleResponseInterface;
 import com.riis.cropcompare.model.Vault;
-import com.riis.cropcompare.util.GetResultsTask;
+import com.riis.cropcompare.util.GetAvailableCropsTask;
 import com.riis.cropcompare.util.Util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CropSelectActivity extends Activity implements HandleResponseInterface
@@ -37,24 +40,14 @@ public class CropSelectActivity extends Activity implements HandleResponseInterf
 
         mButtonLinearLayout = (LinearLayout) findViewById(R.id.crop_container);
 
-        new GetResultsTask(this, false).execute(Vault.getPriceReceivedURL(mStateSelected));
-        new GetResultsTask(this, false).execute(Vault.getYieldURL(mStateSelected));
+        new GetAvailableCropsTask(this).execute(Vault.getCropAvailabilityURL(mStateSelected));
     }
 
     @Override
-    public void handleResponse(String response, boolean yieldRequest)
+    public void handleCropResponse(AvailableCropResponse response)
     {
-        if(mPriceReceivedResponse == null)
-        {
-            mPriceReceivedResponse = mUtil.parseMetaResponse(response);
-        }
-        else
-        {
-            List<String> yieldReceivedResponse = mUtil.parseMetaResponse(response);
-            mCrops = mUtil.compareCropLists(mPriceReceivedResponse, yieldReceivedResponse);
-
-            setButtons();
-        }
+        mCrops = new ArrayList<>(Arrays.asList(response.Values));
+        setButtons();
     }
 
     private void setButtons()
@@ -63,25 +56,19 @@ public class CropSelectActivity extends Activity implements HandleResponseInterf
         {
             LayoutInflater inflater = LayoutInflater.from(this);
             Button cropButton = (Button) inflater.inflate(R.layout.crop_button, null, false);
-            setButtonText(cropButton, mCrops.get(buttonIndex), buttonIndex);
+            cropButton.setText(mCrops.get(buttonIndex));
+            final int finalButtonIndex = buttonIndex;
+            cropButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(CropSelectActivity.this, ResultsActivity.class);
+                    intent.putExtra("acreage", mAcreage);
+                    intent.putExtra("stateSelected", mStateSelected);
+                    intent.putExtra("cropSelected", mCrops.get(finalButtonIndex));
+                    startActivity(intent);
+                }
+            });
 
             mButtonLinearLayout.addView(cropButton);
         }
-    }
-
-    private void setButtonText(Button button, String text, final int index)
-    {
-        button.setText(text);
-        button.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(CropSelectActivity.this, ResultsActivity.class);
-                intent.putExtra("acreage", mAcreage);
-                intent.putExtra("stateSelected", mStateSelected);
-                intent.putExtra("cropSelected", mCrops.get(index));
-                startActivity(intent);
-            }
-        });
     }
 }
