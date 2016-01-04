@@ -21,7 +21,6 @@ public class ListComparerTest
     @Test
     public void listComparisonValidator() throws Exception
     {
-
         assertEquals(mCorrectResponse, mUtil.compareCropLists(mList1, mList2));
     }
 }
