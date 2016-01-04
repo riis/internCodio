@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Crop Compare</string>
+    <string name="next_button">Next</string>
+    <string name="select_a_crop_textview">Select a crop</string>
+    <string name="app_description">Find out how much it will cost to grow certain crops in your state</string>
+    <string name="placeholder_button_text">Ignore</string>
+    <string name="results_textview">Results</string>
+    <string name="acreage_hint">Enter acreage</string>
+    <string name="yieldResultTxt">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Yield (BU):&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="priceResultTxt">&#160;&#160;&#160;&#160;&#160;&#160;Price ($ / BU):&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="costResultTxt">Estimated Costs:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="totalResultTxt">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Total:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+</resources>
