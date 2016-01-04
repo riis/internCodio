@@ -10,9 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class LoginActivity extends AppCompatActivity implements TaskCallBack
 {
     private Button mLoginButton;
@@ -74,14 +71,7 @@ public class LoginActivity extends AppCompatActivity implements TaskCallBack
         }
         else
         {
-            String token = "";
-            try {
-                JSONObject loginResult = new JSONObject(loginResponse);
-                JSONObject dataValue = loginResult.getJSONObject("dataValue");
-                token = dataValue.getString("token");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            String token = Util.parseToken(loginResponse);
 
             if(token.isEmpty())
             {
@@ -93,8 +83,6 @@ public class LoginActivity extends AppCompatActivity implements TaskCallBack
             }
             else
             {
-
-
                 SharedPreferences preferences = getSharedPreferences(Vault.PREF_NAME, MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString(Vault.VAULT_STRING, Vault.encrypt(token));
