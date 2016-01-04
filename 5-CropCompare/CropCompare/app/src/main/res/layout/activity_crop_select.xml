@@ -23,8 +23,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@color/midoriAccent"
-            android:padding="@dimen/activity_horizontal_margin">
-
-        </LinearLayout>
+            android:padding="@dimen/activity_horizontal_margin"/>
     </ScrollView>
 </LinearLayout>

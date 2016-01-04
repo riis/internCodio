@@ -3,8 +3,10 @@ package com.riis.cropcompare.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.riis.cropcompare.R;
 import com.riis.cropcompare.model.HandleResponseInterface;
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class CropSelectActivity extends Activity implements HandleResponseInterface
 {
-    private Button[] mCropButtons;
+    private LinearLayout mButtonLinearLayout;
     private List<String> mCrops;
     private List<String> mPriceReceivedResponse = null;
     private Util mUtil = new Util();
@@ -33,16 +35,7 @@ public class CropSelectActivity extends Activity implements HandleResponseInterf
         mAcreage = intent.getStringExtra("acreage");
         mStateSelected = intent.getStringExtra("state");
 
-        mCropButtons = new Button[]
-                {
-                        (Button)findViewById(R.id.crop_1), (Button)findViewById(R.id.crop_2),
-                        (Button)findViewById(R.id.crop_3), (Button)findViewById(R.id.crop_4),
-                        (Button)findViewById(R.id.crop_5), (Button)findViewById(R.id.crop_6),
-                        (Button)findViewById(R.id.crop_7), (Button)findViewById(R.id.crop_8),
-                        (Button)findViewById(R.id.crop_9), (Button)findViewById(R.id.crop_10),
-                        (Button)findViewById(R.id.crop_11), (Button)findViewById(R.id.crop_12),
-                        (Button)findViewById(R.id.crop_13)
-                };
+        mButtonLinearLayout = (LinearLayout) findViewById(R.id.crop_container);
 
         new GetResultsTask(this, false).execute(Vault.getPriceReceivedURL(mStateSelected));
         new GetResultsTask(this, false).execute(Vault.getYieldURL(mStateSelected));
@@ -66,16 +59,13 @@ public class CropSelectActivity extends Activity implements HandleResponseInterf
 
     private void setButtons()
     {
-        for (int buttonIndex = 0; buttonIndex < mCropButtons.length; buttonIndex++)
+        for (int buttonIndex = 0; buttonIndex < mCrops.size(); buttonIndex++)
         {
-            if (buttonIndex < mCrops.size())
-            {
-                setButtonText(mCropButtons[buttonIndex], mCrops.get(buttonIndex), buttonIndex);
-            }
-            else
-            {
-                mCropButtons[buttonIndex].setVisibility(View.GONE);
-            }
+            LayoutInflater inflater = LayoutInflater.from(this);
+            Button cropButton = (Button) inflater.inflate(R.layout.crop_button, null, false);
+            setButtonText(cropButton, mCrops.get(buttonIndex), buttonIndex);
+
+            mButtonLinearLayout.addView(cropButton);
         }
     }
 
