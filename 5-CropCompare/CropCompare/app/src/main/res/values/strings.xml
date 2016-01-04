@@ -6,8 +6,8 @@
     <string name="placeholder_button_text">Ignore</string>
     <string name="results_textview">Results</string>
     <string name="acreage_hint">Enter acreage</string>
-    <string name="yieldResultTxt">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Yield (BU):&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
-    <string name="priceResultTxt">&#160;&#160;&#160;&#160;&#160;&#160;Price ($ / BU):&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
-    <string name="costResultTxt">Estimated Costs:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
-    <string name="totalResultTxt">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Total:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</string>
+    <string name="total">Total:</string>
+    <string name="estimate_costs">Estimated Costs:</string>
+    <string name="price_bu">Price ($ / BU):</string>
+    <string name="yield_bu">Yield (BU):</string>
 </resources>
