@@ -3,125 +3,114 @@ package com.riis.cropcompare.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.riis.cropcompare.R;
-import com.riis.cropcompare.misc.HandleResponseInterface;
-import com.riis.cropcompare.request.MakeRequest;
-import com.riis.cropcompare.request.RequestResponseParsing;
+import com.riis.cropcompare.model.HandleResponseInterface;
+import com.riis.cropcompare.model.Vault;
+import com.riis.cropcompare.util.GetResultsTask;
+import com.riis.cropcompare.util.Util;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ResultsActivity extends Activity implements HandleResponseInterface {
+public class ResultsActivity extends Activity implements HandleResponseInterface
+{
+    private final Map<String, String> mCosts = new HashMap<>();
 
-    private int acreage;
-    private String stateSelected;
-    private String cropSelected;
-    private ProgressBar spinner;
-    private TextView yieldTextView;
-    private TextView priceTextView;
-    private TextView costTextView;
-    private TextView totalTextView;
-    private float yieldData;
-    private float priceData;
-    boolean yieldFound = false;
-    boolean priceFound = false;
-    private final Map<String, String> costs = new HashMap<>();
+    private boolean mPriceFound = false;
+    private boolean mYieldFound = false;
+    private float mPriceData;
+    private float mYieldData;
+    private int mAcreage;
+    private String mCropSelected;
+    private ProgressBar mProgressBar;
+    private TextView mCostTextView;
+    private TextView mPriceTextView;
+    private TextView mTotalTextView;
+    private TextView mYieldTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-        priceTextView = (TextView)findViewById(R.id.priceResultTextView);
-        yieldTextView = (TextView)findViewById(R.id.yieldResultTextView);
-        totalTextView = (TextView)findViewById(R.id.totalResultTextView);
-        costTextView = (TextView)findViewById(R.id.costResultTextView);
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        Intent intent = getIntent();
+        mAcreage = Integer.parseInt(intent.getStringExtra("acreage"));
+        String stateSelected = intent.getStringExtra("stateSelected");
+        mCropSelected = intent.getStringExtra("cropSelected");
+
+        mPriceTextView = (TextView)findViewById(R.id.priceResultTextView);
+        mYieldTextView = (TextView)findViewById(R.id.yieldResultTextView);
+        mTotalTextView = (TextView)findViewById(R.id.totalResultTextView);
+        mCostTextView = (TextView)findViewById(R.id.costResultTextView);
+        mProgressBar = (ProgressBar)findViewById(R.id.progressBar1);
 
         setUpCosts();
 
-        this.spinner.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
 
-        getIntentExtras();
-        String[] urls = generateURLs(this.stateSelected, this.cropSelected);
-
-        MakeRequest priceReceivedMakeRequest = new MakeRequest(urls[0], this, this, false);
-        MakeRequest yieldMakeRequest = new MakeRequest(urls[1], this, this, true);
-
-        priceReceivedMakeRequest.gatherData();
-        yieldMakeRequest.gatherData();
-
-    }
-
-    private String[] generateURLs(String state, String crop) {
-        String yieldRequestURL = "http://nass-api.azurewebsites.net/api/api_get?agg_level_desc=STATE" +
-                "&year=2014&freq_desc=ANNUAL&sector_desc=CROPS&group_desc=FIELD%20CROPS&commodity_desc=" +
-                crop.replace(" ", "%20").replace(",", "%26") + "&state_name=" + state.replace(" ", "%20")
-                .toUpperCase() + "&statisticcat_desc=YIELD";
-
-        String priceRecievedRequestURL = "http://nass-api.azurewebsites.net/api/api_get?agg_level_desc" +
-                "=STATE&year=2014&freq_desc=ANNUAL&sector_desc=CROPS&group_desc=FIELD%20CROPS&commodity_desc="
-                + crop.replace(" ", "%20").replace(",", "%26") + "&state_name=" + state.replace(" ", "%20")
-                .toUpperCase() + "&statisticcat_desc=PRICE%20RECEIVED";
-
-        return new String[]{priceRecievedRequestURL, yieldRequestURL};
-    }
-
-    private void getIntentExtras() {
-        Intent intent = getIntent();
-        this.acreage = Integer.parseInt(intent.getStringExtra("acreage"));
-        this.stateSelected = intent.getStringExtra("stateSelected");
-        this.cropSelected = intent.getStringExtra("cropSelected");
+        new GetResultsTask(this, true).execute(Vault.getPriceReceivedURL(stateSelected));
+        new GetResultsTask(this, true).execute(Vault.getYieldURL(stateSelected));
     }
 
     @Override
-    public void handleResponse(StringBuilder response, boolean yieldRequest) {
-        RequestResponseParsing requestResponseParsing = new RequestResponseParsing(response);
-        if(yieldRequest) {
-            yieldData = requestResponseParsing.parseDataResponse();
-            yieldFound = true;
-        } else {
-            priceData = requestResponseParsing.parseDataResponse();
-            priceFound = true;
+    public void handleResponse(String response, boolean yieldRequest) {
+        if(yieldRequest)
+        {
+            mYieldData = new Util().parseDataResponse(response);
+            mYieldFound = true;
+        }
+        else
+        {
+            mPriceData = new Util().parseDataResponse(response);
+            mPriceFound = true;
         }
 
-        if(priceFound &&yieldFound) {
+        if(mPriceFound && mYieldFound)
+        {
             setResultText();
-            this.spinner.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 
     private void setUpCosts() {
-        this.costs.put("CORN", String.valueOf(287.72));
-        this.costs.put("SOYBEANS", String.valueOf(159.51));
-        this.costs.put("WHEAT", String.valueOf(105.39));
-        this.costs.put("COTTON", String.valueOf(339.97));
-        this.costs.put("RICE", String.valueOf(401.34));
-        this.costs.put("SORGHUM", String.valueOf(117.71));
+        mCosts.put("CORN", String.valueOf(287.72));
+        mCosts.put("SOYBEANS", String.valueOf(159.51));
+        mCosts.put("WHEAT", String.valueOf(105.39));
+        mCosts.put("COTTON", String.valueOf(339.97));
+        mCosts.put("RICE", String.valueOf(401.34));
+        mCosts.put("SORGHUM", String.valueOf(117.71));
     }
 
     private void setResultText() {
         String placeholder = "%.02f";
         float costOfCrop = 0;
         boolean costFound = false;
-        try {
-            costOfCrop = Float.parseFloat(costs.get(this.cropSelected.toUpperCase()));
+        try
+        {
+            costOfCrop = Float.parseFloat(mCosts.get(this.mCropSelected.toUpperCase()));
             costFound = true;
-        } catch(Exception e) {
-            Log.d("ResultsActivity", e.toString());
         }
-        yieldTextView.setText(yieldTextView.getText() + String.valueOf(yieldData * this.acreage));
-        priceTextView.setText(priceTextView.getText() + String.format(placeholder, priceData));
-        if(costFound)
-            costTextView.setText(costTextView.getText() + "$" + String.format(placeholder, costOfCrop * this.acreage));
-        else
-            costTextView.setText(costTextView.getText() + "N/A");
+        catch(Exception e) {
+            e.printStackTrace();
+        }
 
-        totalTextView.setText(totalTextView.getText() + "$" + String.format(placeholder, (priceData * (yieldData * this.acreage)) - (costOfCrop * this.acreage)));
+        mYieldTextView.setText(mYieldTextView.getText() + String.valueOf(mYieldData * mAcreage));
+        mPriceTextView.setText(mPriceTextView.getText() + String.format(placeholder, mPriceData));
+        if(costFound)
+        {
+            mCostTextView.setText(mCostTextView.getText() + "$" + String.format(placeholder,
+                    costOfCrop * mAcreage));
+        }
+        else
+        {
+            mCostTextView.setText(mCostTextView.getText() + "N/A");
+        }
+
+        mTotalTextView.setText(mTotalTextView.getText() + "$" + String.format(placeholder,
+                (mPriceData * (mYieldData * mAcreage)) - (costOfCrop * mAcreage)));
     }
 }
