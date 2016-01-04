@@ -1,7 +1,6 @@
 package com.riis.cropcompare.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,50 +16,55 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends Activity {
-    private Spinner stateSpinner;
-    private EditText acreage;
+public class MainActivity extends Activity
+{
+    private EditText mAcreage;
+    private Spinner mStateSpinner;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        acreage = (EditText) findViewById(R.id.acreage);
+        mAcreage = (EditText) findViewById(R.id.acreage);
         addStatesToSpinner();
     }
 
-    public void onFabPressed(View view) {
-        if (!Objects.equals(String.valueOf(stateSpinner.getSelectedItem()), "Select a state") &&
-                acreage.getText().length() != 0 && Integer.parseInt(String.valueOf(acreage.getText())) != 0) {
-
-            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-
-            intent.putExtra("state", String.valueOf(stateSpinner.getSelectedItem()));
-            intent.putExtra("acreage", String.valueOf(acreage.getText()));
+    public void onFabPressed(View view)
+    {
+        if (!Objects.equals(String.valueOf(mStateSpinner.getSelectedItem()), "Select a state") &&
+                mAcreage.getText().length() != 0 && Integer.parseInt(String.valueOf(mAcreage.getText())) != 0)
+        {
+            Intent intent = new Intent(MainActivity.this, CropSelectActivity.class);
+            intent.putExtra("state", String.valueOf(mStateSpinner.getSelectedItem()));
+            intent.putExtra("acreage", String.valueOf(mAcreage.getText()));
 
             startActivity(intent);
-        } else {
+        }
+        else
+        {
             makeToast();
         }
     }
 
-    private void makeToast() {
-        Context context = getApplicationContext();
+    private void makeToast()
+    {
         CharSequence text = "Please enter the required information!";
         int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, text, duration);
+        Toast toast = Toast.makeText(this, text, duration);
         toast.show();
     }
 
-    private void addStatesToSpinner() {
-        stateSpinner = (Spinner) findViewById(R.id.stateSpinner);
+    private void addStatesToSpinner()
+    {
+        mStateSpinner = (Spinner) findViewById(R.id.stateSpinner);
         List<String> statesList = new ArrayList<>();
         statesList.add("Select a state");
         statesList.addAll(Arrays.asList(getResources().getStringArray(R.array.state_list)));
 
-        ArrayAdapter dataAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, statesList);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statesList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        stateSpinner.setAdapter(dataAdapter);
+        mStateSpinner.setAdapter(dataAdapter);
     }
 }

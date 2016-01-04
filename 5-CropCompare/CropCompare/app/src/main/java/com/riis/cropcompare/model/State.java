@@ -1,4 +1,4 @@
-package com.riis.cropcompare.misc;
+package com.riis.cropcompare.model;
 
 /**
  * author: scub3d on 9/21/15.
