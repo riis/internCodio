@@ -23,7 +23,7 @@ public class ZodiacDetailActivity extends Activity  {
         Zodiac zodiac = Zodiac.signs[signNum];
 
         ActivityZodiacDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_zodiac_detail);
-        binding.setVariable(BR.zodiacModel, zodiac);
+        binding.setVariable(riis.horoscope.BR.zodiacModel, zodiac);
 
         new AsyncTaskParseJson(zodiac).execute();
     }
