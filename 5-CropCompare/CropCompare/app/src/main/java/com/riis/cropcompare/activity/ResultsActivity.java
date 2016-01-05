@@ -86,26 +86,25 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
         boolean costFound = false;
         try
         {
-            costOfCrop = Float.parseFloat(mCosts.get(this.mCropSelected.toUpperCase()));
+            costOfCrop = Float.parseFloat(mCosts.get(mCropSelected.toUpperCase()));
             costFound = true;
         }
         catch(Exception e) {
             e.printStackTrace();
         }
 
-        mYieldTextView.setText(mYieldTextView.getText() + String.valueOf(mYieldData * mAcreage));
-        mPriceTextView.setText(mPriceTextView.getText() + String.format(placeholder, mPriceData));
+        mYieldTextView.setText(String.valueOf(mYieldData * mAcreage));
+        mPriceTextView.setText(String.format(placeholder, mPriceData));
         if(costFound)
         {
-            mCostTextView.setText(mCostTextView.getText() + "$" + String.format(placeholder,
-                    costOfCrop * mAcreage));
+            mCostTextView.setText("$" + String.format(placeholder, costOfCrop * mAcreage));
         }
         else
         {
-            mCostTextView.setText(mCostTextView.getText() + "N/A");
+            mCostTextView.setText("N/A");
         }
 
-        mTotalTextView.setText(mTotalTextView.getText() + "$" + String.format(placeholder,
-                (mPriceData * (mYieldData * mAcreage)) - (costOfCrop * mAcreage)));
+        mTotalTextView.setText("$" + String.format(placeholder,
+                (mPriceData * mYieldData * mAcreage) - (costOfCrop * mAcreage)));
     }
 }

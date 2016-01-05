@@ -13,7 +13,6 @@ import com.riis.cropcompare.model.AvailableCropResponse;
 import com.riis.cropcompare.model.HandleResponseInterface;
 import com.riis.cropcompare.model.Vault;
 import com.riis.cropcompare.util.GetAvailableCropsTask;
-import com.riis.cropcompare.util.Util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,8 +22,6 @@ public class CropSelectActivity extends Activity implements HandleResponseInterf
 {
     private LinearLayout mButtonLinearLayout;
     private List<String> mCrops;
-    private List<String> mPriceReceivedResponse = null;
-    private Util mUtil = new Util();
     private String mAcreage;
     private String mStateSelected;
 
