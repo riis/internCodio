@@ -1,8 +1,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
-            name="availableCropModel"
-            type="com.riis.cropcompare.model.AvailableCropResponse"/>
+            name="cropResultModel"
+            type="com.riis.cropcompare.model.CropResults"/>
     </data>
 
     <RelativeLayout
@@ -64,7 +64,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:text="@{cropResultModel.yieldTotal}"/>
             </LinearLayout>
 
             <LinearLayout
