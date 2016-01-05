@@ -44,6 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/month"
-            android:padding="@dimen/activity_vertical_margin"/>
+            android:padding="@dimen/activity_vertical_margin"
+            android:text="@{zodiacModel.daily}"/>
     </RelativeLayout>
 </layout>

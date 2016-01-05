@@ -1,7 +1,11 @@
 package riis.horoscope;
 
 
-public class Zodiac {
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+public class Zodiac extends BaseObservable
+{
     private String name;
     private String description;
     private String symbol;
@@ -42,7 +46,12 @@ public class Zodiac {
 
     public String toString() { return this.name; }
 
-    public void setDaily(String daily) { this.daily = daily; }
+    public void setDaily(String daily)
+    {
+        this.daily = daily;
+        notifyPropertyChanged(BR.daily);
+    }
 
+    @Bindable
     public String getDaily() { return daily; }
 }

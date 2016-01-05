@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import org.json.JSONObject;
 
@@ -15,17 +14,19 @@ import riis.horoscope.databinding.ActivityZodiacDetailBinding;
 public class ZodiacDetailActivity extends Activity  {
     public static final String EXTRA_SIGN = "ZodiacSign";
 
+    private Zodiac mZodiac;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         int signNum = getIntent().getIntExtra(EXTRA_SIGN, -1);
-        Zodiac zodiac = Zodiac.signs[signNum];
+        mZodiac = Zodiac.signs[signNum];
 
         ActivityZodiacDetailBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_zodiac_detail);
-        binding.setVariable(riis.horoscope.BR.zodiacModel, zodiac);
+        binding.setVariable(riis.horoscope.BR.zodiacModel, mZodiac);
 
-        new AsyncTaskParseJson(zodiac).execute();
+        new AsyncTaskParseJson(mZodiac).execute();
     }
 
     public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
@@ -58,8 +59,7 @@ public class ZodiacDetailActivity extends Activity  {
 
         @Override
         protected void onPostExecute(String strFromDoInBg) {
-            TextView display = (TextView) findViewById(R.id.daily);
-            display.setText(horoscope);
+            mZodiac.setDaily(horoscope);
         }
     }
 }
