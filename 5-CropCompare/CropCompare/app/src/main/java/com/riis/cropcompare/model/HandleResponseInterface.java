@@ -4,5 +4,5 @@ package com.riis.cropcompare.model;
  * author: solyss on 10/29/2015.
  */
 public interface HandleResponseInterface {
-    void handleCropResponse(AvailableCropResponse response);
+    void handleCropResponse(Object response, Boolean yieldRequest);
 }

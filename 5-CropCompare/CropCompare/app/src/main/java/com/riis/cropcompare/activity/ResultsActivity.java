@@ -6,22 +6,17 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.riis.cropcompare.R;
-import com.riis.cropcompare.model.AvailableCropResponse;
+import com.riis.cropcompare.model.CropDetailResponse;
+import com.riis.cropcompare.model.CropResults;
 import com.riis.cropcompare.model.HandleResponseInterface;
 import com.riis.cropcompare.model.Vault;
-import com.riis.cropcompare.util.GetCropCostTask;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.riis.cropcompare.util.GetCropDetailsTask;
 
 public class ResultsActivity extends Activity implements HandleResponseInterface
 {
-    private final Map<String, String> mCosts = new HashMap<>();
-
+    private CropResults mCropResults;
     private boolean mPriceFound = false;
     private boolean mYieldFound = false;
-    private float mPriceData;
-    private float mYieldData;
     private int mAcreage;
     private String mCropSelected;
     private TextView mCostTextView;
@@ -44,31 +39,33 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
         mTotalTextView = (TextView)findViewById(R.id.totalResultTextView);
         mCostTextView = (TextView)findViewById(R.id.costResultTextView);
 
+        mCropResults = new CropResults();
+
         setUpCosts();
 
         //mProgressBar.setVisibility(View.VISIBLE);
 
-        new GetCropCostTask(this, true).execute(Vault.getCropYieldUrl(stateSelected, mCropSelected));
+        new GetCropDetailsTask(this, true).execute(Vault.getCropYieldUrl(stateSelected, mCropSelected));
+        new GetCropDetailsTask(this, true).execute(Vault.getCropPriceUrl(stateSelected, mCropSelected));
     }
 
     @Override
-    public void handleCropResponse(AvailableCropResponse response) {
-//        if(yieldRequest)
-//        {
-//            mYieldData = new Util().parseDataResponse(response);
-//            mYieldFound = true;
-//        }
-//        else
-//        {
-//            mPriceData = new Util().parseDataResponse(response);
-//            mPriceFound = true;
-//        }
-//
-//        if(mPriceFound && mYieldFound)
-//        {
-//            setResultText();
-//            //mProgressBar.setVisibility(View.GONE);
-//        }
+    public void handleCropResponse(Object response, Boolean yieldRequest) {
+        if(yieldRequest)
+        {
+            mCropResults.setYield(((CropDetailResponse)response).value);
+            mYieldFound = true;
+        }
+        else
+        {
+            mCropResults.setPricePerBU(((CropDetailResponse)response).value);
+            mPriceFound = true;
+        }
+
+        if(mPriceFound && mYieldFound)
+        {
+            setResultText();
+        }
     }
 
     private void setUpCosts() {

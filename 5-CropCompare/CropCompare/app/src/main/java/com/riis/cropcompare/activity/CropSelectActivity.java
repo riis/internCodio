@@ -41,9 +41,10 @@ public class CropSelectActivity extends Activity implements HandleResponseInterf
     }
 
     @Override
-    public void handleCropResponse(AvailableCropResponse response)
+    public void handleCropResponse(Object response, Boolean notUsed)
     {
-        mCrops = new ArrayList<>(Arrays.asList(response.Values));
+        AvailableCropResponse availableCropResponse = (AvailableCropResponse) response;
+        mCrops = new ArrayList<>(Arrays.asList(availableCropResponse.Values));
         setButtons();
     }
 
