@@ -8,14 +8,14 @@ import com.riis.cropcompare.BR;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class CropResults extends BaseObservable {
+public class CropResults extends BaseObservable
+{
     private int mAcreage;
     private float mYield;
     private float mPricePerBU;
-    private float mEstimatedCost;
-    private float mTotal;
 
-    public void setYield(String yield) {
+    public void setYield(String yield)
+    {
         try
         {
             mYield = Float.valueOf(yield.replace(",", ""));
@@ -29,7 +29,8 @@ public class CropResults extends BaseObservable {
         notifyPropertyChanged(BR.yieldTotal);
     }
 
-    public void setPricePerBU(String pricePerBU) {
+    public void setPricePerBU(String pricePerBU)
+    {
         try
         {
             mPricePerBU = Float.valueOf(pricePerBU.replace(",", ""));
@@ -43,14 +44,6 @@ public class CropResults extends BaseObservable {
         notifyPropertyChanged(BR.pricePerBuString);
         notifyPropertyChanged(BR.cropEstimate);
         notifyPropertyChanged(BR.totalString);
-    }
-
-    public float getEstimatedCost() {
-        return mEstimatedCost;
-    }
-
-    public float getTotal() {
-        return mTotal;
     }
 
     public void setAcreage(int acreage)
@@ -84,8 +77,9 @@ public class CropResults extends BaseObservable {
     @Bindable
     public String getTotalString()
     {
-        mTotal = (mPricePerBU * mYield * mAcreage) - (mPricePerBU * mAcreage);
-        return NumberFormat.getCurrencyInstance(Locale.US).format(mTotal);
+        return NumberFormat.getCurrencyInstance(Locale.US).format(
+                (mPricePerBU * mYield * mAcreage) - (mPricePerBU * mAcreage)
+        );
     }
 
     public float getPricePerBu() {
