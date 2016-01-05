@@ -35,6 +35,7 @@ public class CropResults extends BaseObservable {
         }
         catch (NumberFormatException e)
         {
+            mPricePerBU = 0;
             e.printStackTrace();
         }
     }

@@ -54,16 +54,18 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
 
         setUpCosts();
 
+        mProgressDialog = new ProgressDialog(this);
         new GetCropDetailsTask(this, true).execute(Vault.getCropYieldUrl(stateSelected, mCropSelected));
         new GetCropDetailsTask(this, false).execute(Vault.getCropPriceUrl(stateSelected, mCropSelected));
     }
 
     @Override
     public void taskStart() {
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage(getString(R.string.loading));
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
+        if (!mProgressDialog.isShowing()) {
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.show();
+        }
     }
 
     @Override
@@ -75,30 +77,30 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
         }
         else
         {
-            mCropResults.setPricePerBU(((CropDetailResponse)response).value);
+            mCropResults.setPricePerBU(((CropDetailResponse) response).value);
             mPriceFound = true;
         }
 
         if(mPriceFound && mYieldFound)
         {
-            setResultText();
+            //setResultText();
             mProgressDialog.dismiss();
         }
     }
 
     private void setUpCosts() {
-//        mCosts.put("CORN", String.valueOf(287.72));
-//        mCosts.put("SOYBEANS", String.valueOf(159.51));
-//        mCosts.put("WHEAT", String.valueOf(105.39));
-//        mCosts.put("COTTON", String.valueOf(339.97));
-//        mCosts.put("RICE", String.valueOf(401.34));
-//        mCosts.put("SORGHUM", String.valueOf(117.71));
+        mCosts.put("CORN", String.valueOf(287.72));
+        mCosts.put("SOYBEANS", String.valueOf(159.51));
+        mCosts.put("WHEAT", String.valueOf(105.39));
+        mCosts.put("COTTON", String.valueOf(339.97));
+        mCosts.put("RICE", String.valueOf(401.34));
+        mCosts.put("SORGHUM", String.valueOf(117.71));
     }
 
     private void setResultText() {
         try
         {
-            mCropResults.setCropCost(Float.parseFloat(mCosts.get(mCropSelected.toUpperCase())));
+//            mCropResults.setCropCost(Float.parseFloat(mCosts.get(mCropSelected.toUpperCase())));
         }
         catch(Exception e) {
             e.printStackTrace();
