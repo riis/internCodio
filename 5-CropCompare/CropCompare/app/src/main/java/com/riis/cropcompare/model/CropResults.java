@@ -5,15 +5,12 @@ import android.databinding.Bindable;
 
 import com.riis.cropcompare.BR;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.Locale;
 
 public class CropResults extends BaseObservable {
     private int mAcreage;
-    private float mCropCost = 0f;
+    private float mCropCost;
     private float mYield;
     private float mPricePerBU;
     private float mEstimatedCost;
@@ -37,13 +34,15 @@ public class CropResults extends BaseObservable {
     public void setPricePerBU(String pricePerBU) {
         try
         {
-            mPricePerBU = Float.valueOf(pricePerBU);
+            mPricePerBU = Float.valueOf(pricePerBU.replace(",", ""));
         }
         catch (NumberFormatException e)
         {
             mPricePerBU = 0;
             e.printStackTrace();
         }
+
+        notifyPropertyChanged(BR.pricePerBuString);
     }
 
     public float getEstimatedCost() {
@@ -62,8 +61,11 @@ public class CropResults extends BaseObservable {
     public void setCropCost(float cropCost)
     {
         mCropCost = cropCost;
+        notifyPropertyChanged(BR.cropEstimate);
+        notifyPropertyChanged(BR.totalString);
     }
 
+    @Bindable
     public String getCropEstimate()
     {
         if (mCropCost == 0)
@@ -74,6 +76,7 @@ public class CropResults extends BaseObservable {
         return NumberFormat.getCurrencyInstance(Locale.US).format(mCropCost * mAcreage);
     }
 
+    @Bindable
     public String getPricePerBuString()
     {
         return String.valueOf(mPricePerBU);
@@ -85,6 +88,7 @@ public class CropResults extends BaseObservable {
         return String.valueOf(mAcreage * mYield);
     }
 
+    @Bindable
     public String getTotalString()
     {
         mTotal = (mPricePerBU * mYield * mAcreage) - (mCropCost * mAcreage);

@@ -26,10 +26,6 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
     private boolean mYieldFound = false;
     private String mCropSelected;
     private ActivityResultsBinding mActivityResultsBinding;
-//    private TextView mCostTextView;
-//    private TextView mPriceTextView;
-//    private TextView mTotalTextView;
-//    private TextView mYieldTextView;
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -41,11 +37,6 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
         int acreage = Integer.parseInt(intent.getStringExtra("acreage"));
         String stateSelected = intent.getStringExtra("stateSelected");
         mCropSelected = intent.getStringExtra("cropSelected");
-
-//        mPriceTextView = (TextView)findViewById(R.id.priceResultTextView);
-//        mYieldTextView = (TextView)findViewById(R.id.yieldResultTextView);
-//        mTotalTextView = (TextView)findViewById(R.id.totalResultTextView);
-//        mCostTextView = (TextView)findViewById(R.id.costResultTextView);
 
         mCropResults = new CropResults();
         mCropResults.setAcreage(acreage);
@@ -84,7 +75,7 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
 
         if(mPriceFound && mYieldFound)
         {
-            //setResultText();
+            setResultText();
             mProgressDialog.dismiss();
             mActivityResultsBinding.invalidateAll();
         }
@@ -102,15 +93,12 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
     private void setResultText() {
         try
         {
-//            mCropResults.setCropCost(Float.parseFloat(mCosts.get(mCropSelected.toUpperCase())));
+            mCropResults.setCropCost(Float.parseFloat(mCosts.get(mCropSelected.toUpperCase())));
         }
-        catch(Exception e) {
+        catch(Exception e)
+        {
+            mCropResults.setCropCost(0);
             e.printStackTrace();
         }
-
-//        mYieldTextView.setText(mCropResults.getYieldTotal());
-//        mPriceTextView.setText(mCropResults.getPricePerBuString());
-//        mCostTextView.setText(mCropResults.getCropEstimate());
-//        mTotalTextView.setText(mCropResults.getTotalString());
     }
 }
