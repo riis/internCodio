@@ -24,16 +24,16 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class ResultsActivityTest
 {
     @Rule
-    public ActivityTestRule<ResultsActivity> mResultsActivityRule = new ActivityTestRule<>(ResultsActivity.class);
+    public ActivityTestRule<ResultsActivity> mResultsActivityRule = new ActivityTestRule<>(ResultsActivity.class, false, false);
 
     @Before
     public void setUp()
     {
         Intent testIntent = new Intent();
-        testIntent.putExtra("state", "Michigan");
+        testIntent.putExtra("stateSelected", "Michigan");
         testIntent.putExtra("acreage", "2");
         testIntent.putExtra("cropSelected", "CORN");
-        mResultsActivityRule.getActivity().setIntent(testIntent);
+        mResultsActivityRule.launchActivity(testIntent);
     }
 
     @Test
