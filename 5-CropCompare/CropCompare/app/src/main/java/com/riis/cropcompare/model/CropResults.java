@@ -3,7 +3,10 @@ package com.riis.cropcompare.model;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.Locale;
 
 public class CropResults extends BaseObservable {
@@ -14,12 +17,26 @@ public class CropResults extends BaseObservable {
     private float mEstimatedCost;
     private float mTotal;
 
-    public void setYield(float yield) {
-        mYield = yield;
+    public void setYield(String yield) {
+        try
+        {
+            mYield = Float.valueOf(yield);
+        }
+        catch (NumberFormatException e)
+        {
+            e.printStackTrace();
+        }
     }
 
-    public void setPricePerBU(float pricePerBU) {
-        mPricePerBU = pricePerBU;
+    public void setPricePerBU(String pricePerBU) {
+        try
+        {
+            mPricePerBU = Float.valueOf(pricePerBU);
+        }
+        catch (NumberFormatException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public float getEstimatedCost() {

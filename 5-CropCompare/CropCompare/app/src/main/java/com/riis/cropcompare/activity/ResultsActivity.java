@@ -55,7 +55,7 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
         setUpCosts();
 
         new GetCropDetailsTask(this, true).execute(Vault.getCropYieldUrl(stateSelected, mCropSelected));
-        new GetCropDetailsTask(this, true).execute(Vault.getCropPriceUrl(stateSelected, mCropSelected));
+        new GetCropDetailsTask(this, false).execute(Vault.getCropPriceUrl(stateSelected, mCropSelected));
     }
 
     @Override
