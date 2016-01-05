@@ -61,6 +61,7 @@
                 <TextView
                     android:id="@+id/yieldResultTextView"
                     android:layout_width="0dp"
+                    android:layout_marginStart="10dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
                     android:textColor="@android:color/white"
@@ -87,6 +88,7 @@
                 <TextView
                     android:id="@+id/priceResultTextView"
                     android:layout_width="0dp"
+                    android:layout_marginStart="10dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
                     android:textColor="@android:color/white"
@@ -114,6 +116,7 @@
                     android:id="@+id/costResultTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:layout_weight=".5"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
@@ -141,6 +144,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
+                    android:layout_marginStart="10dp"
                     android:textColor="@android:color/white"
                     android:textSize="20sp"
                     android:text="@{cropResultModel.totalString}"/>

@@ -10,7 +10,6 @@ import java.util.Locale;
 
 public class CropResults extends BaseObservable {
     private int mAcreage;
-    private float mCropCost;
     private float mYield;
     private float mPricePerBU;
     private float mEstimatedCost;
@@ -19,8 +18,7 @@ public class CropResults extends BaseObservable {
     public void setYield(String yield) {
         try
         {
-            yield = yield.replace(",", "");
-            mYield = Float.valueOf(yield);
+            mYield = Float.valueOf(yield.replace(",", ""));
         }
         catch (NumberFormatException e)
         {
@@ -43,6 +41,8 @@ public class CropResults extends BaseObservable {
         }
 
         notifyPropertyChanged(BR.pricePerBuString);
+        notifyPropertyChanged(BR.cropEstimate);
+        notifyPropertyChanged(BR.totalString);
     }
 
     public float getEstimatedCost() {
@@ -58,22 +58,15 @@ public class CropResults extends BaseObservable {
         mAcreage = acreage;
     }
 
-    public void setCropCost(float cropCost)
-    {
-        mCropCost = cropCost;
-        notifyPropertyChanged(BR.cropEstimate);
-        notifyPropertyChanged(BR.totalString);
-    }
-
     @Bindable
     public String getCropEstimate()
     {
-        if (mCropCost == 0)
+        if (mPricePerBU == 0)
         {
             return "N/A";
         }
 
-        return NumberFormat.getCurrencyInstance(Locale.US).format(mCropCost * mAcreage);
+        return NumberFormat.getCurrencyInstance(Locale.US).format(mPricePerBU * mAcreage);
     }
 
     @Bindable
@@ -91,7 +84,11 @@ public class CropResults extends BaseObservable {
     @Bindable
     public String getTotalString()
     {
-        mTotal = (mPricePerBU * mYield * mAcreage) - (mCropCost * mAcreage);
+        mTotal = (mPricePerBU * mYield * mAcreage) - (mPricePerBU * mAcreage);
         return NumberFormat.getCurrencyInstance(Locale.US).format(mTotal);
+    }
+
+    public float getPricePerBu() {
+        return mPricePerBU;
     }
 }

@@ -25,11 +25,11 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
     private boolean mPriceFound = false;
     private boolean mYieldFound = false;
     private String mCropSelected;
-    private ActivityResultsBinding mActivityResultsBinding;
     private ProgressDialog mProgressDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
@@ -41,8 +41,8 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
         mCropResults = new CropResults();
         mCropResults.setAcreage(acreage);
 
-        mActivityResultsBinding = DataBindingUtil.setContentView(this, R.layout.activity_results);
-        mActivityResultsBinding.setVariable(com.riis.cropcompare.BR.cropResultModel, mCropResults);
+        ActivityResultsBinding activityResultsBinding = DataBindingUtil.setContentView(this, R.layout.activity_results);
+        activityResultsBinding.setVariable(com.riis.cropcompare.BR.cropResultModel, mCropResults);
 
         setUpCosts();
 
@@ -52,8 +52,10 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
     }
 
     @Override
-    public void taskStart() {
-        if (!mProgressDialog.isShowing()) {
+    public void taskStart()
+    {
+        if (!mProgressDialog.isShowing())
+        {
             mProgressDialog.setMessage(getString(R.string.loading));
             mProgressDialog.setCancelable(false);
             mProgressDialog.show();
@@ -61,7 +63,8 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
     }
 
     @Override
-    public void handleCropResponse(Object response, Boolean yieldRequest) {
+    public void handleCropResponse(Object response, Boolean yieldRequest)
+    {
         if(yieldRequest)
         {
             mCropResults.setYield(((CropDetailResponse)response).value);
@@ -75,13 +78,13 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
 
         if(mPriceFound && mYieldFound)
         {
-            setResultText();
+            setCropCosts();
             mProgressDialog.dismiss();
-            mActivityResultsBinding.invalidateAll();
         }
     }
 
-    private void setUpCosts() {
+    private void setUpCosts()
+    {
         mCosts.put("CORN", String.valueOf(287.72));
         mCosts.put("SOYBEANS", String.valueOf(159.51));
         mCosts.put("WHEAT", String.valueOf(105.39));
@@ -90,15 +93,18 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
         mCosts.put("SORGHUM", String.valueOf(117.71));
     }
 
-    private void setResultText() {
-        try
+    private void setCropCosts()
+    {
+        if (mCropResults.getPricePerBu() == 0)
         {
-            mCropResults.setCropCost(Float.parseFloat(mCosts.get(mCropSelected.toUpperCase())));
-        }
-        catch(Exception e)
-        {
-            mCropResults.setCropCost(0);
-            e.printStackTrace();
+            try
+            {
+                mCropResults.setPricePerBU(mCosts.get(mCropSelected.toUpperCase()));
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }
