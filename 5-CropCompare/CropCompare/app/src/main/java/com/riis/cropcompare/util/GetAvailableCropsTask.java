@@ -15,6 +15,12 @@ public class GetAvailableCropsTask extends AsyncTask<String, Void, AvailableCrop
     }
 
     @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        mHandleResponseInterface.taskStart();
+    }
+
+    @Override
     protected AvailableCropResponse doInBackground(String... vars)
     {
         if(vars.length != 1)

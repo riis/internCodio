@@ -1,6 +1,7 @@
 package com.riis.cropcompare.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ public class CropSelectActivity extends Activity implements HandleResponseInterf
     private List<String> mCrops;
     private String mAcreage;
     private String mStateSelected;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,11 +43,20 @@ public class CropSelectActivity extends Activity implements HandleResponseInterf
     }
 
     @Override
+    public void taskStart() {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage(getString(R.string.loading));
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
+
+    @Override
     public void handleCropResponse(Object response, Boolean notUsed)
     {
         AvailableCropResponse availableCropResponse = (AvailableCropResponse) response;
         mCrops = new ArrayList<>(Arrays.asList(availableCropResponse.Values));
         setButtons();
+        mProgressDialog.dismiss();
     }
 
     private void setButtons()

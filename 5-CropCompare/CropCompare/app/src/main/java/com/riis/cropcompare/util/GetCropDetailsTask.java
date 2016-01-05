@@ -17,6 +17,12 @@ public class GetCropDetailsTask extends AsyncTask<String, Void, CropDetailRespon
     }
 
     @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        mHandleResponseInterface.taskStart();
+    }
+
+    @Override
     protected CropDetailResponse doInBackground(String... vars)
     {
         if(vars.length != 1)

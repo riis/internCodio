@@ -1,10 +1,10 @@
 package com.riis.cropcompare.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.riis.cropcompare.R;
 import com.riis.cropcompare.databinding.ActivityResultsBinding;
@@ -29,6 +29,7 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
 //    private TextView mPriceTextView;
 //    private TextView mTotalTextView;
 //    private TextView mYieldTextView;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,14 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
     }
 
     @Override
+    public void taskStart() {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage(getString(R.string.loading));
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
+
+    @Override
     public void handleCropResponse(Object response, Boolean yieldRequest) {
         if(yieldRequest)
         {
@@ -73,16 +82,17 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
         if(mPriceFound && mYieldFound)
         {
             setResultText();
+            mProgressDialog.dismiss();
         }
     }
 
     private void setUpCosts() {
-        mCosts.put("CORN", String.valueOf(287.72));
-        mCosts.put("SOYBEANS", String.valueOf(159.51));
-        mCosts.put("WHEAT", String.valueOf(105.39));
-        mCosts.put("COTTON", String.valueOf(339.97));
-        mCosts.put("RICE", String.valueOf(401.34));
-        mCosts.put("SORGHUM", String.valueOf(117.71));
+//        mCosts.put("CORN", String.valueOf(287.72));
+//        mCosts.put("SOYBEANS", String.valueOf(159.51));
+//        mCosts.put("WHEAT", String.valueOf(105.39));
+//        mCosts.put("COTTON", String.valueOf(339.97));
+//        mCosts.put("RICE", String.valueOf(401.34));
+//        mCosts.put("SORGHUM", String.valueOf(117.71));
     }
 
     private void setResultText() {
