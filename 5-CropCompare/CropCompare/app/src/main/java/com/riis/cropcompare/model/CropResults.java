@@ -1,11 +1,12 @@
 package com.riis.cropcompare.model;
 
+import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class CropResults {
+public class CropResults extends BaseObservable {
     private int mAcreage;
     private float mCropCost = 0f;
     private float mYield;
