@@ -37,9 +37,14 @@ public class HttpHelper
             Gson gson = new Gson();
             String serverResponse = getResponse(url);
             JSONObject jsonResponse = new JSONObject(serverResponse);
-            JSONObject availableCropData = jsonResponse.getJSONArray("data").getJSONObject(0);
+            JSONObject cropDetailData = jsonResponse.getJSONArray("data").getJSONObject(0);
+            CropDetailResponse cropDetailResponse = gson.fromJson(cropDetailData.toString(), CropDetailResponse.class);
+            if (cropDetailResponse.value == null)
+            {
+                cropDetailResponse.value = "0";
+            }
 
-            return gson.fromJson(availableCropData.toString(), CropDetailResponse.class);
+            return cropDetailResponse;
         } catch (JSONException e) {
             return null;
         }

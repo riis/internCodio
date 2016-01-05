@@ -25,6 +25,7 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
     private boolean mPriceFound = false;
     private boolean mYieldFound = false;
     private String mCropSelected;
+    private ActivityResultsBinding mActivityResultsBinding;
 //    private TextView mCostTextView;
 //    private TextView mPriceTextView;
 //    private TextView mTotalTextView;
@@ -49,8 +50,8 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
         mCropResults = new CropResults();
         mCropResults.setAcreage(acreage);
 
-        ActivityResultsBinding activityResultsBinding = DataBindingUtil.setContentView(this, R.layout.activity_results);
-        activityResultsBinding.setVariable(com.riis.cropcompare.BR.cropResultModel, mCropResults);
+        mActivityResultsBinding = DataBindingUtil.setContentView(this, R.layout.activity_results);
+        mActivityResultsBinding.setVariable(com.riis.cropcompare.BR.cropResultModel, mCropResults);
 
         setUpCosts();
 
@@ -85,6 +86,7 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
         {
             //setResultText();
             mProgressDialog.dismiss();
+            mActivityResultsBinding.invalidateAll();
         }
     }
 

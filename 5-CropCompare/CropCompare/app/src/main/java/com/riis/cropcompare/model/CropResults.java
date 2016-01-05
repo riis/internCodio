@@ -22,13 +22,16 @@ public class CropResults extends BaseObservable {
     public void setYield(String yield) {
         try
         {
+            yield = yield.replace(",", "");
             mYield = Float.valueOf(yield);
-            notifyPropertyChanged(BR.yieldTotal);
         }
         catch (NumberFormatException e)
         {
+            mYield = 0;
             e.printStackTrace();
         }
+
+        notifyPropertyChanged(BR.yieldTotal);
     }
 
     public void setPricePerBU(String pricePerBU) {
