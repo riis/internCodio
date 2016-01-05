@@ -29,6 +29,6 @@ public class GetAvailableCropsTask extends AsyncTask<String, Void, AvailableCrop
     protected void onPostExecute(AvailableCropResponse result)
     {
         super.onPostExecute(result);
-        mHandleResponseInterface.handleCropResponse(result);
+        mHandleResponseInterface.handleCropResponse(result, false);
     }
 }

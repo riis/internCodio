@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.riis.cropcompare.model.AvailableCropResponse;
+import com.riis.cropcompare.model.CropDetailResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,15 +32,14 @@ public class HttpHelper
         }
     }
 
-    public AvailableCropResponse getCropCost(String url) {
+    public CropDetailResponse getCropDetails(String url) {
         try {
             Gson gson = new Gson();
             String serverResponse = getResponse(url);
-            Log.d("Inside Crop cost", serverResponse);
             JSONObject jsonResponse = new JSONObject(serverResponse);
             JSONObject availableCropData = jsonResponse.getJSONArray("data").getJSONObject(0);
 
-            return gson.fromJson(availableCropData.toString(), AvailableCropResponse.class);
+            return gson.fromJson(availableCropData.toString(), CropDetailResponse.class);
         } catch (JSONException e) {
             return null;
         }
