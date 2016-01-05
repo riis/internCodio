@@ -36,7 +36,11 @@ public class CropSelectActivityTest
     @Test
     public void testClickCropButton()
     {
+        //Tests the corn button is a child of our crop container
         onView(withText("CORN")).check(matches(isDescendantOfA(withId(R.id.crop_container))));
+        //Tests clicking on the corn button transitions activities
         onView(withText("CORN")).perform(click());
+        onView(withId(R.id.yieldResultTextView))
+                .check(matches(isDescendantOfA(withId(R.id.results_container))));
     }
 }

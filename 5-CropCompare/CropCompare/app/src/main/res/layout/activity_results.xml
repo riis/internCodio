@@ -31,7 +31,7 @@
             android:textSize="22sp" />
 
         <LinearLayout
-            android:id="@+id/row_container2"
+            android:id="@+id/results_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/app_logo"
