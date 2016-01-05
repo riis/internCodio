@@ -3,6 +3,8 @@ package com.riis.cropcompare.model;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import com.riis.cropcompare.BR;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
@@ -21,6 +23,7 @@ public class CropResults extends BaseObservable {
         try
         {
             mYield = Float.valueOf(yield);
+            notifyPropertyChanged(BR.yieldTotal);
         }
         catch (NumberFormatException e)
         {
