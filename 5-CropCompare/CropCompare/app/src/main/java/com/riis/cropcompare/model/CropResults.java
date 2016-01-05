@@ -13,8 +13,6 @@ public class CropResults extends BaseObservable {
     private float mCropCost;
     private float mYield;
     private float mPricePerBU;
-    private float mEstimatedCost;
-    private float mTotal;
 
     public void setYield(String yield) {
         try
@@ -43,14 +41,6 @@ public class CropResults extends BaseObservable {
         }
 
         notifyPropertyChanged(BR.pricePerBuString);
-    }
-
-    public float getEstimatedCost() {
-        return mEstimatedCost;
-    }
-
-    public float getTotal() {
-        return mTotal;
     }
 
     public void setAcreage(int acreage)
@@ -91,7 +81,8 @@ public class CropResults extends BaseObservable {
     @Bindable
     public String getTotalString()
     {
-        mTotal = (mPricePerBU * mYield * mAcreage) - (mCropCost * mAcreage);
-        return NumberFormat.getCurrencyInstance(Locale.US).format(mTotal);
+        return NumberFormat.getCurrencyInstance(Locale.US).format(
+                (mPricePerBU * mYield * mAcreage) - (mCropCost * mAcreage)
+        );
     }
 }
