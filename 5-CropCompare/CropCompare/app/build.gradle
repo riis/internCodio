@@ -33,7 +33,7 @@ android {
 tasks.withType(Test) {
     include '**/TestSuite.class'
     jacoco {
-        destinationFile = file("$buildDir/jacocoTest.exec")
+        destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
     }
 }
 
