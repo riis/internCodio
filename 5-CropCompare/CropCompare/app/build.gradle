@@ -22,18 +22,18 @@ android {
         }
     }
 
-    tasks.withType(Test) {
-        include '**/TestSuite.class'
-        jacoco {
-            destinationFile = file("$buildDir/jacocoTest.exec")
-        }
-    }
-
     lintOptions {
         abortOnError false
     }
     dataBinding {
         enabled = true
+    }
+}
+
+tasks.withType(Test) {
+    include '**/TestSuite.class'
+    jacoco {
+        destinationFile = file("$buildDir/jacocoTest.exec")
     }
 }
 
