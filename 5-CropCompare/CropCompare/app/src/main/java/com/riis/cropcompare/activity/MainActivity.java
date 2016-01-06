@@ -32,7 +32,7 @@ public class MainActivity extends Activity
         mAcreage = (EditText) findViewById(R.id.acreage);
         addStatesToSpinner();
 
-        View.OnClickListener fabButtonListener = new View.OnClickListener()
+        View.OnClickListener cropAndStateSelectedListener = new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -54,7 +54,7 @@ public class MainActivity extends Activity
             }
         };
 
-        fabButton.setOnClickListener(fabButtonListener);
+        fabButton.setOnClickListener(cropAndStateSelectedListener);
     }
 
     private void makeToast()
