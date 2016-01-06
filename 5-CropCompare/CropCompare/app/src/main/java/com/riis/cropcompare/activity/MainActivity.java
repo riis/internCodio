@@ -32,7 +32,7 @@ public class MainActivity extends Activity
         mAcreage = (EditText) findViewById(R.id.acreage);
         addStatesToSpinner();
 
-        fabButton.setOnClickListener(new View.OnClickListener()
+        View.OnClickListener fabButtonListener = new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -52,7 +52,9 @@ public class MainActivity extends Activity
                     makeToast();
                 }
             }
-        });
+        };
+
+        fabButton.setOnClickListener(fabButtonListener);
     }
 
     private void makeToast()

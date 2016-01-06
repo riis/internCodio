@@ -2,6 +2,7 @@ package com.riis.cropcompare.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.util.Log;
 
 import com.riis.cropcompare.BR;
 
@@ -23,7 +24,7 @@ public class CropResults extends BaseObservable
         catch (NumberFormatException e)
         {
             mYield = 0;
-            e.printStackTrace();
+            Log.e("Invalid value for yield", e.toString());
         }
 
         notifyPropertyChanged(BR.yieldTotal);
@@ -38,7 +39,7 @@ public class CropResults extends BaseObservable
         catch (NumberFormatException e)
         {
             mPricePerBU = 0;
-            e.printStackTrace();
+            Log.e("Invalid value for price", e.toString());
         }
 
         notifyPropertyChanged(BR.pricePerBuString);
@@ -54,7 +55,7 @@ public class CropResults extends BaseObservable
     @Bindable
     public String getCropEstimate()
     {
-        if (mPricePerBU == 0)
+        if (Float.compare(mPricePerBU, 0F) == 0)
         {
             return "N/A";
         }

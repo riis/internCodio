@@ -28,6 +28,7 @@ public class HttpHelper
 
             return gson.fromJson(availableCropData.toString(), AvailableCropResponse.class);
         } catch (JSONException e) {
+            Log.e("Error Parsing JSON", e.toString());
             return null;
         }
     }
@@ -46,6 +47,7 @@ public class HttpHelper
 
             return cropDetailResponse;
         } catch (JSONException e) {
+            Log.e("Error Parsing JSON", e.toString());
             return null;
         }
     }
@@ -75,7 +77,7 @@ public class HttpHelper
         }
         catch(Exception e)
         {
-            e.printStackTrace();
+            Log.e("Error Parsing JSON", e.toString());
         }
 
         return response;
