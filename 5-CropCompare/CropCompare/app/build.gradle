@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
-apply plugin: 'sonar-runner'
 apply plugin: 'com.android.databinding'
 apply plugin: 'com.neenbedankt.android-apt'
 
@@ -35,26 +34,6 @@ android {
     }
     dataBinding {
         enabled = true
-    }
-}
-
-
-sonarRunner{
-    sonarProperties{
-        property "sonar.host.url", "http://localhost:9000"
-        property "sonar.jdbc.url", "jdbc:mysql://localhost:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance"
-        property "sonar.jdbc.driverClassName","com.mysql.jdbc.Driver"
-        property "sonar.jdbc.username","root"
-        property "sonar.jdbc.password","root"
-        property "sonar.projectKey", "RIIS:CropCompare"
-        property "sonar.projectVersion", "2.0"
-        property "sonar.projectName","CropCompare"
-        property "sonar.java.coveragePlugin", "jacoco"
-        property "sonar.sources","src/main"
-        property "sonar.tests", "src/test"
-        property "sonar.jacoco.reportPath", "build/jacoco/jacocoTest.exec"
-        property "sonar.java.binaries", "build"
-        property "sonar.dynamicAnalysis", "resuseReports"
     }
 }
 
