@@ -2,6 +2,7 @@ package com.riis.cropcompare.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -67,7 +68,8 @@ public class CropSelectActivity extends Activity implements HandleResponseInterf
             Button cropButton = (Button) inflater.inflate(R.layout.crop_button, null, false);
             cropButton.setText(mCrops.get(buttonIndex));
             final int finalButtonIndex = buttonIndex;
-            cropButton.setOnClickListener(new View.OnClickListener() {
+
+            View.OnClickListener cropButtonClickListener = new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent intent = new Intent(CropSelectActivity.this, ResultsActivity.class);
                     intent.putExtra("acreage", mAcreage);
@@ -75,7 +77,8 @@ public class CropSelectActivity extends Activity implements HandleResponseInterf
                     intent.putExtra("cropSelected", mCrops.get(finalButtonIndex));
                     startActivity(intent);
                 }
-            });
+            };
+            cropButton.setOnClickListener(cropButtonClickListener);
 
             mButtonLinearLayout.addView(cropButton);
         }

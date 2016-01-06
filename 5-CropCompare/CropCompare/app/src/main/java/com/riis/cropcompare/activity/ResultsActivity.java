@@ -97,14 +97,7 @@ public class ResultsActivity extends Activity implements HandleResponseInterface
     {
         if (mCropResults.getPricePerBu() == 0)
         {
-            try
-            {
-                mCropResults.setPricePerBU(mCosts.get(mCropSelected.toUpperCase()));
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
+            mCropResults.setPricePerBU(mCosts.get(mCropSelected.toUpperCase()));
         }
     }
 }
