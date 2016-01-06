@@ -14,6 +14,7 @@
 		FF298EA11C3D704300B69883 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF298E9F1C3D704300B69883 /* LaunchScreen.storyboard */; };
 		FF298EAC1C3D704300B69883 /* Calculator___iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF298EAB1C3D704300B69883 /* Calculator___iOSTests.swift */; };
 		FF298EB71C3D704300B69883 /* Calculator___iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF298EB61C3D704300B69883 /* Calculator___iOSUITests.swift */; };
+		FF298EC51C3D70A200B69883 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF298EC41C3D70A200B69883 /* Calculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		FF298EB21C3D704300B69883 /* Calculator - iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Calculator - iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF298EB61C3D704300B69883 /* Calculator___iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calculator___iOSUITests.swift"; sourceTree = "<group>"; };
 		FF298EB81C3D704300B69883 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF298EC41C3D70A200B69883 /* Calculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				FF298E9D1C3D704300B69883 /* Assets.xcassets */,
 				FF298E9F1C3D704300B69883 /* LaunchScreen.storyboard */,
 				FF298EA21C3D704300B69883 /* Info.plist */,
+				FF298EC41C3D70A200B69883 /* Calculator.swift */,
 			);
 			path = "Calculator - iOS";
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 			files = (
 				FF298E991C3D704200B69883 /* ViewController.swift in Sources */,
 				FF298E971C3D704200B69883 /* AppDelegate.swift in Sources */,
+				FF298EC51C3D70A200B69883 /* Calculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
