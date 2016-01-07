@@ -1,6 +1,6 @@
 package com.riis.cropcompare.model;
 
-public class Vault
+public final class Vault
 {
     private Vault() {
         //Private constructor to hide the implicit public one
